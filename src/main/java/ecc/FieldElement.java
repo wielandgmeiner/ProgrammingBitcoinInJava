@@ -47,7 +47,7 @@ public class FieldElement {
         FieldElement that = (FieldElement) o;
         if ( ! this.prime.equals(that.getPrime())) {
             throw new IllegalArgumentException(getClass().getCanonicalName()
-                    + ": Cannot add two number sin different Fields");
+                    + ": Cannot add two numbers in different Fields");
         }
         BigInteger num = (this.num.add(that.getNum()).mod(this.prime));
         return new FieldElement(num, this.prime);
@@ -61,9 +61,32 @@ public class FieldElement {
         FieldElement that = (FieldElement) o;
         if ( ! this.prime.equals(that.getPrime())) {
             throw new IllegalArgumentException(getClass().getCanonicalName()
-                    + ": Cannot sub two number sin different Fields");
+                    + ": Cannot subtract two numbers in different Fields");
         }
         BigInteger num = (this.num.subtract(that.getNum()).mod(this.prime));
+        return new FieldElement(num, this.prime);
+    }
+
+    public FieldElement multiply(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            throw new IllegalArgumentException(getClass().getCanonicalName()
+                    + ": argument must be FieldElement");
+        }
+        FieldElement that = (FieldElement) o;
+        if ( ! this.prime.equals(that.getPrime())) {
+            throw new IllegalArgumentException(getClass().getCanonicalName()
+                    + ": Cannot multiply two number sin different Fields");
+        }
+        BigInteger num = (this.num.multiply(that.getNum()).mod(this.prime));
+        return new FieldElement(num, this.prime);
+    }
+
+    public FieldElement pow(Object o) {
+        if (o == null || ! (o instanceof Integer)) {
+            throw new IllegalArgumentException(getClass().getCanonicalName()
+                    + ": argument must be FieldElement");
+        }
+        BigInteger num = (this.num.pow((int) o).mod(this.prime));
         return new FieldElement(num, this.prime);
     }
 

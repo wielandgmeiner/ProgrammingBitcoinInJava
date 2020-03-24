@@ -3,6 +3,7 @@ package ecc;
 
 import org.junit.Test;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,6 +51,23 @@ public class FieldElementTest {
         assertTrue(a.subtract(b).equals(new FieldElement(16, 31)));
     }
 
+    @Test
+    public void testMultiplication() {
+        FieldElement a = new FieldElement(24, 31);
+        FieldElement b = new FieldElement(19, 31);
+        assertTrue(a.multiply(b).equals(new FieldElement(22, 31)));
+    }
+
+    @Test
+    public void testPow() {
+        FieldElement a = new FieldElement(17, 31);
+        assertTrue(a.pow(3).equals(new FieldElement(15, 31)));
+        FieldElement b = new FieldElement(5, 31);
+        FieldElement c = new FieldElement(18, 31);
+        assertTrue(b.pow(5).multiply(c).equals(new FieldElement(16, 31)));
+    }
+
+
     @Test(expected = IllegalArgumentException.class)
     public void testAddTwoElementsFromDifferentFields() {
         FieldElement a = new FieldElement(7, 13);
@@ -72,11 +90,23 @@ public class FieldElementTest {
             System.out.println(
                     IntStream.range(0, prime)
                     .boxed()
-                    .collect(Collectors.toList())
-                    .stream()
                     .map( x -> x*k % prime)
                     .sorted()
-                    .collect(Collectors.toList()));
+                    .collect(Collectors.toList())
+            );
+        }
+    }
+
+    @Test
+    public void exercise7() {
+        for (int prime : new ArrayList<Integer>(List.of(7, 11, 17, 31, 43))) {
+            System.out.println(
+                    IntStream.range(1, prime)
+                    .boxed()
+                    .map( x -> BigInteger.valueOf(x).pow(prime - 1).mod(BigInteger.valueOf(prime)))
+                    .sorted()
+                    .collect(Collectors.toList())
+                    );
         }
     }
 }
