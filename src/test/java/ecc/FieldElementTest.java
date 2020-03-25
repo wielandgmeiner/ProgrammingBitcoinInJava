@@ -67,6 +67,20 @@ public class FieldElementTest {
         assertTrue(b.pow(5).multiply(c).equals(new FieldElement(16, 31)));
     }
 
+    @Test
+    public void testDivision() {
+        FieldElement a = new FieldElement(3, 31);
+        FieldElement b = new FieldElement(24, 31);
+        assertTrue(a.divide(b).equals(new FieldElement(4, 31)));
+
+        FieldElement c = new FieldElement(17, 31);
+        assertTrue(c.pow(-3).equals(new FieldElement(29, 31)));
+
+        FieldElement d = new FieldElement(4, 31);
+        FieldElement e = new FieldElement(11, 31);
+        assertTrue(d.pow(-4).multiply(e).equals(new FieldElement(13, 31)));
+    }
+
 
     @Test(expected = IllegalArgumentException.class)
     public void testAddTwoElementsFromDifferentFields() {

@@ -75,7 +75,7 @@ public class FieldElement {
         FieldElement that = (FieldElement) o;
         if ( ! this.prime.equals(that.getPrime())) {
             throw new IllegalArgumentException(getClass().getCanonicalName()
-                    + ": Cannot multiply two number sin different Fields");
+                    + ": Cannot multiply two numbers in different Fields");
         }
         BigInteger num = (this.num.multiply(that.getNum()).mod(this.prime));
         return new FieldElement(num, this.prime);
@@ -86,8 +86,26 @@ public class FieldElement {
             throw new IllegalArgumentException(getClass().getCanonicalName()
                     + ": argument must be FieldElement");
         }
-        BigInteger num = (this.num.pow((int) o).mod(this.prime));
+        int exp = (int) o;
+        BigInteger num = this.num.modPow(BigInteger.valueOf(exp), this.prime);
         return new FieldElement(num, this.prime);
+    }
+
+
+    public FieldElement divide(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            throw new IllegalArgumentException(getClass().getCanonicalName()
+                    + ": argument must be FieldElement");
+        }
+        FieldElement that = (FieldElement) o;
+        if ( ! this.prime.equals(that.getPrime())) {
+            throw new IllegalArgumentException(getClass().getCanonicalName()
+                    + ": Cannot divide two numbers in different Fields");
+        }
+        BigInteger exp = this.getPrime().subtract(BigInteger.valueOf(2));
+        BigInteger divisor = that.getNum().modPow(exp, this.prime);
+        BigInteger quotient = this.num.multiply(divisor).mod(this.prime);
+        return new FieldElement(quotient, this.prime);
     }
 
     @Override
