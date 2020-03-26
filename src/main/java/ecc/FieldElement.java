@@ -1,5 +1,6 @@
 package ecc;
 
+import java.lang.reflect.Field;
 import java.math.BigInteger;
 import java.util.Objects;
 
@@ -35,16 +36,8 @@ public class FieldElement {
         this(BigInteger.valueOf(num), BigInteger.valueOf(prime));
     }
 
-    public boolean notEquals(Object o) {
-        return ! equals(o);
-    }
+    public FieldElement add(FieldElement that) {
 
-    public FieldElement add(Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            throw new IllegalArgumentException(getClass().getCanonicalName()
-                    + ": argument must be FieldElement");
-        }
-        FieldElement that = (FieldElement) o;
         if ( ! this.prime.equals(that.getPrime())) {
             throw new IllegalArgumentException(getClass().getCanonicalName()
                     + ": Cannot add two numbers in different Fields");
@@ -53,12 +46,8 @@ public class FieldElement {
         return new FieldElement(num, this.prime);
     }
 
-    public FieldElement subtract(Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            throw new IllegalArgumentException(getClass().getCanonicalName()
-                    + ": argument must be FieldElement");
-        }
-        FieldElement that = (FieldElement) o;
+    public FieldElement subtract(FieldElement that) {
+
         if ( ! this.prime.equals(that.getPrime())) {
             throw new IllegalArgumentException(getClass().getCanonicalName()
                     + ": Cannot subtract two numbers in different Fields");
@@ -67,12 +56,8 @@ public class FieldElement {
         return new FieldElement(num, this.prime);
     }
 
-    public FieldElement multiply(Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            throw new IllegalArgumentException(getClass().getCanonicalName()
-                    + ": argument must be FieldElement");
-        }
-        FieldElement that = (FieldElement) o;
+    public FieldElement multiply(FieldElement that) {
+
         if ( ! this.prime.equals(that.getPrime())) {
             throw new IllegalArgumentException(getClass().getCanonicalName()
                     + ": Cannot multiply two numbers in different Fields");
@@ -81,23 +66,14 @@ public class FieldElement {
         return new FieldElement(num, this.prime);
     }
 
-    public FieldElement pow(Object o) {
-        if (o == null || ! (o instanceof Integer)) {
-            throw new IllegalArgumentException(getClass().getCanonicalName()
-                    + ": argument must be FieldElement");
-        }
-        int exp = (int) o;
+    public FieldElement pow(long exp) {
         BigInteger num = this.num.modPow(BigInteger.valueOf(exp), this.prime);
         return new FieldElement(num, this.prime);
     }
 
 
-    public FieldElement divide(Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            throw new IllegalArgumentException(getClass().getCanonicalName()
-                    + ": argument must be FieldElement");
-        }
-        FieldElement that = (FieldElement) o;
+    public FieldElement divide(FieldElement that) {
+
         if ( ! this.prime.equals(that.getPrime())) {
             throw new IllegalArgumentException(getClass().getCanonicalName()
                     + ": Cannot divide two numbers in different Fields");
@@ -110,10 +86,7 @@ public class FieldElement {
 
     @Override
     public String toString() {
-        return "FieldElement{" +
-                "num=" + num +
-                ", prime=" + prime +
-                '}';
+        return "FieldElement_" + prime + "(" + num + ")";
     }
 
     @Override

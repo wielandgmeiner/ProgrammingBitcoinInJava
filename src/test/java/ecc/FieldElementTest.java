@@ -20,8 +20,8 @@ public class FieldElementTest {
         FieldElement b = new FieldElement(2, 31);
         FieldElement c = new FieldElement(15, 31);
         assertTrue(a.equals(b));
-        assertTrue(a.notEquals(c));
-        assertFalse(a.notEquals(b));
+        assertTrue( ! a.equals(c));
+        assertFalse( ! a.equals(b));
     }
 
     @Test
