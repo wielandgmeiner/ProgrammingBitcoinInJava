@@ -3,19 +3,19 @@ package ecc;
 import java.math.BigInteger;
 import java.util.Objects;
 
-public class Point {
+public class Point<T extends FieldElement> {
 
-    private BigInteger a;
-    private BigInteger b;
-    private BigInteger x;
-    private BigInteger y;
+    private T x;
+    private T y;
+    private T a;
+    private T b;
 
-    public Point(BigInteger x, BigInteger y, BigInteger a, BigInteger b) {
+    public Point(T x, T y, T a, T b) {
 
-        this.a = a;
-        this.b = b;
         this.x = x;
         this.y = y;
+        this.a = a;
+        this.b = b;
 
         if (a == null || b == null) {
             throw new NullPointerException(getClass().getCanonicalName()
@@ -25,19 +25,15 @@ public class Point {
             // Point at infinity
             return;
         }
-        if (y.pow(2).compareTo(x.pow(3).add(a.multiply(x)).add(b)) != 0) {
+        if ( ! y.pow(2).equals(x.pow(3).add(a.multiply(x)).add(b))) {
             throw new IllegalArgumentException(getClass().getCanonicalName()
-                    + String.format(": point (%d,%d) is not on the curve", x, y));
+                    + ": point (" + x + "," + y + ") is not on the curve");
         }
     }
 
     // Point at infinity
-    public Point(long a, long b) {
-        this(null, null, BigInteger.valueOf(a), BigInteger.valueOf(b));
-    }
-
-    public Point(long x, long y, long a, long b) {
-        this(BigInteger.valueOf(x), BigInteger.valueOf(y), BigInteger.valueOf(a), BigInteger.valueOf(b));
+    public Point(T a, T b) {
+        this(null, null, a, b);
     }
 
     public Point add(Point that) {
@@ -46,30 +42,35 @@ public class Point {
             throw new IllegalArgumentException(getClass().getCanonicalName()
                     + ": Points must be on the same curve");
         }
+        // this is point at infinity
         if (this.x == null) {
             return that;
         }
+        // that is point at infinity
         if (that.x == null) {
             return this;
         }
-        if (this.x.compareTo(that.getX()) == 0 && this.y.compareTo(that.getY()) != 0) {
-            return new Point(this.a.longValue(), this.b.longValue());
+        // same x means points -> this.y == - that.y -> add yields point at infinity
+        if (this.x.equals(that.getX()) && ! this.y.equals(that.getY())) {
+            return new Point(this.a, this.b);
         }
-        if (this.x.compareTo(that.getX()) != 0) {
-            BigInteger slope = (that.getY().subtract(this.y)).divide(that.getX().subtract(this.x));
-            BigInteger x3 = slope.pow(2).subtract(this.x).subtract(that.getX());
-            BigInteger y3 = slope.multiply(this.x.subtract(x3)).subtract(this.y);
+        // points are different, regular case
+        if ( ! this.x.equals(that.getX())) {
+            FieldElement slope = (that.getY().subtract(this.y)).divide(that.getX().subtract(this.x));
+            FieldElement x3 = slope.pow(2).subtract(this.x).subtract(that.getX());
+            FieldElement y3 = slope.multiply(this.x.subtract(x3)).subtract(this.y);
             return new Point(x3, y3, this.a, this.b);
         }
         // tangent without further section
-        if (this.equals(that) && this.y.compareTo(BigInteger.ZERO) == 0) {
-            return new Point(this.a.longValue(), this.b.longValue());
+        if (this.equals(that) && this.y.isZero()) {
+            return new Point(this.a, this.b);
         }
+        // point added to itself
         if (this.equals(that)) {
-            BigInteger slope = (this.x.pow(2).multiply(BigInteger.valueOf(3)).add(this.a))
-                    .divide(this.y.multiply(BigInteger.valueOf(2)));
-            BigInteger x3 = slope.pow(2).subtract(this.x.multiply(BigInteger.valueOf(2)));
-            BigInteger y3 = (slope.multiply(this.x.subtract(x3))).subtract(this.y);
+            FieldElement slope = (this.x.pow(2).multiply(this.x.valueOf(3)).add(this.a))
+                    .divide(this.y.multiply(this.x.valueOf(2)));
+            FieldElement x3 = slope.pow(2).subtract(this.x.multiply(this.x.valueOf(2)));
+            FieldElement y3 = (slope.multiply(this.x.subtract(x3))).subtract(this.y);
             return new Point(x3, y3, this.a, this.b);
         }
         return null;
@@ -79,7 +80,7 @@ public class Point {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Point point = (Point) o;
+        Point<T> point = (Point<T>) o;
         return Objects.equals(a, point.a) &&
                 Objects.equals(b, point.b) &&
                 Objects.equals(x, point.x) &&
@@ -99,35 +100,35 @@ public class Point {
         return "Point(" + x + "," + y + ")_" + a + "_" + b;
     }
 
-    public BigInteger getA() {
+    public T getA() {
         return a;
     }
 
-    public void setA(BigInteger a) {
+    public void setA(T a) {
         this.a = a;
     }
 
-    public BigInteger getB() {
+    public T getB() {
         return b;
     }
 
-    public void setB(BigInteger b) {
+    public void setB(T b) {
         this.b = b;
     }
 
-    public BigInteger getX() {
+    public T getX() {
         return x;
     }
 
-    public void setX(BigInteger x) {
+    public void setX(T x) {
         this.x = x;
     }
 
-    public BigInteger getY() {
+    public T getY() {
         return y;
     }
 
-    public void setY(BigInteger y) {
+    public void setY(T y) {
         this.y = y;
     }
 }
