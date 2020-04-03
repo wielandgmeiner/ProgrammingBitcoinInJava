@@ -76,6 +76,20 @@ public class Point<T extends FieldElement> {
         return null;
     }
 
+    public Point<T> rmul(BigInteger scalar) {
+        BigInteger coef = scalar;
+        Point<T> current = this;
+        Point<T> result = new Point<T>(this.a, this.b);
+        while (coef.compareTo(BigInteger.ZERO) != 0) {
+            if (coef.and(BigInteger.ONE).compareTo(BigInteger.ZERO) != 0) {
+                result = result.add(current);
+            }
+            current = current.add(current);
+            coef = coef.shiftRight(1);
+        }
+        return result;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

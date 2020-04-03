@@ -1,10 +1,10 @@
 package ecc;
 
-import java.math.BigInteger;
 import java.util.Objects;
 
 public class RealFieldElement implements FieldElement {
 
+    // would probably better with BigDecimal instead of Double
     private Double num;
 
     private final Double THRESHOLD = 0.0001;

@@ -3,6 +3,8 @@ package ecc;
 import java.math.BigInteger;
 import java.util.Objects;
 
+// this is bs, just works because Jimmy's examples are with nice whole numbers
+// this should have been implemented with BigDecimal in the first place
 public class BigIntegerPoint {
 
     private BigInteger x;

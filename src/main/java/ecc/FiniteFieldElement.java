@@ -42,7 +42,7 @@ public class FiniteFieldElement implements FieldElement {
             throw new NullPointerException(getClass().getCanonicalName()
                     + ": arguments must not be null");
         }
-        if (that.getClass() != FiniteFieldElement.class) {
+        if ( ! (that instanceof FiniteFieldElement)) {
             throw new IllegalArgumentException(getClass().getCanonicalName()
                     + ": Argument must be of type FiniteFieldElement");
         }
@@ -62,7 +62,7 @@ public class FiniteFieldElement implements FieldElement {
             throw new NullPointerException(getClass().getCanonicalName()
                     + ": arguments must not be null");
         }
-        if (that.getClass() != FiniteFieldElement.class) {
+        if ( ! (that instanceof FiniteFieldElement)) {
             throw new IllegalArgumentException(getClass().getCanonicalName()
                     + ": Argument must be of type FiniteFieldElement");
         }
@@ -82,7 +82,7 @@ public class FiniteFieldElement implements FieldElement {
             throw new NullPointerException(getClass().getCanonicalName()
                     + ": arguments must not be null");
         }
-        if (that.getClass() != FiniteFieldElement.class) {
+        if ( ! (that instanceof FiniteFieldElement)) {
             throw new IllegalArgumentException(getClass().getCanonicalName()
                     + ": Argument must be of type FiniteFieldElement");
         }
@@ -102,7 +102,7 @@ public class FiniteFieldElement implements FieldElement {
             throw new NullPointerException(getClass().getCanonicalName()
                     + ": arguments must not be null");
         }
-        if (that.getClass() != FiniteFieldElement.class) {
+        if ( ! (that instanceof FiniteFieldElement)) {
             throw new IllegalArgumentException(getClass().getCanonicalName()
                     + ": Argument must be of type FiniteFieldElement");
         }

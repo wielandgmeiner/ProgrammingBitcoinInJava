@@ -3,6 +3,9 @@ package ecc;
 
 import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import static org.junit.Assert.*;
 
 public class BigIntegerPointTest {
@@ -85,5 +88,30 @@ public class BigIntegerPointTest {
         BigIntegerPoint z = new BigIntegerPoint(x3, y3, a, b);
         System.out.println(z);
         assertEquals(new BigIntegerPoint(3, -7, a, b), z);
+    }
+
+    @Test
+    public void fooTest() {
+        //Method 1
+        BigDecimal f1 = new BigDecimal("0.0");
+        BigDecimal pointOne = new BigDecimal("0.1");
+        for (int i = 1; i <= 11; i++) {
+            f1 = f1.add(pointOne);
+        }
+
+        //Method 2
+        BigDecimal f2 = new BigDecimal("0.1");
+        BigDecimal eleven = new BigDecimal("11");
+        f2 = f2.multiply(eleven);
+
+        System.out.println("f1 = " + f1);
+        System.out.println("f2 = " + f2);
+
+        if (f1.compareTo(f2) == 0)
+            System.out.println("f1 and f2 are equal using BigDecimal\n");
+        else
+            System.out.println("f1 and f2 are not equal using BigDecimal\n");
+
+        System.out.println("pointOne / f1: " + pointOne.divide(f1, 20, RoundingMode.HALF_UP));
     }
 }

@@ -15,15 +15,6 @@ public class PointTest {
         System.out.println(p);
     }
 
-    @Test
-    public void testFiniteFieldPointIsOnCurve() {
-        Point<FiniteFieldElement> p = new Point<FiniteFieldElement>(
-                new FiniteFieldElement(192, 223), new FiniteFieldElement(105, 223),
-                new FiniteFieldElement(0, 223), new FiniteFieldElement(7, 223)
-                );
-        System.out.println(p);
-    }
-
     @Test(expected = IllegalArgumentException.class)
     public void testRealFieldPointIsNotOnCurve() {
         Point p = new Point<RealFieldElement>(
