@@ -9,7 +9,7 @@ public class S256PointTest {
 
     @Test
     public void testOrder() {
-        S256Point p = G.rmul(N);
+        Point<S256FieldElement> p = G.rmul(N);
         assertEquals(INFINITY, p);
     }
 }
