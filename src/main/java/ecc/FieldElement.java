@@ -1,6 +1,6 @@
 package ecc;
 
-interface FieldElement {
+public interface FieldElement {
 
     FieldElement ZERO = null;
 
@@ -15,6 +15,8 @@ interface FieldElement {
     FieldElement pow(long exp);
 
     FieldElement valueOf(long val);
+
+    Number getNum();
 
     @Override
     String toString();
