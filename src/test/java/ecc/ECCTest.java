@@ -219,7 +219,7 @@ public class ECCTest {
 
     @Test
     public void testExercise3_6_1() {
-        S256Point point = new S256Point(
+        Point<S256FieldElement> point = s256FieldElementPoint(
                 "887387e452b8eacc4acfde10d9aaf7f6d9a0f975aabb10d006e4da568744d06c",
                 "61de6d95231cd89026e286df3b6ae4a894a3378e393e93a0f45b666329a0ae34");
         BigInteger z = new BigInteger("ec208baa0fc1c19f708a9ca96fdeff3ac3f230bb4a7ba4aede4942ad003c0f60", 16);
@@ -234,7 +234,7 @@ public class ECCTest {
 
     @Test
     public void testExercise3_6_2() {
-        S256Point point = new S256Point(
+        Point<S256FieldElement> point = s256FieldElementPoint(
                 "887387e452b8eacc4acfde10d9aaf7f6d9a0f975aabb10d006e4da568744d06c",
                 "61de6d95231cd89026e286df3b6ae4a894a3378e393e93a0f45b666329a0ae34");
         BigInteger z = new BigInteger("7c076ff316692a3d7eb3c3bb0f8b1488cf72e1afcd929e29307032997a838a3d", 16);
