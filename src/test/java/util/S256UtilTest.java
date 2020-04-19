@@ -19,7 +19,7 @@ public class S256UtilTest {
     }
 
     @Test
-    public void testSignatureCreation() {
+    public void testSignature() {
         BigInteger e = new BigInteger(1, hash256("my secret"));
         assertEquals("8b387de39861728c92ec9f589c303b1038ff60eb3963b12cd212263a1d1e0f00",
                 e.toString(16));
@@ -39,8 +39,6 @@ public class S256UtilTest {
                 s.toString(16));
         Point<S256FieldElement> point = G.rmul(e);
         System.out.println(point);
-        // FIXME point/fieldElement type system is broken, can't even print out num <-------!!!!!!!!!
-        System.out.println("x/y: " + point.getX().getNum() + "/" + point.getY().getNum());
         System.out.println(z.toString(16));
         System.out.println(r.toString(16));
         System.out.println(s.toString(16));
