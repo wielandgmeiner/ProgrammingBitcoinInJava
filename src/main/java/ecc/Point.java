@@ -36,7 +36,7 @@ public class Point<T extends FieldElement> {
         this(null, null, a, b);
     }
 
-    public Point add(Point that) {
+    public Point<T> add(Point<T> that) {
 
         if ( ! this.a.equals(that.getA()) || ! this.b.equals(that.getB())) {
             throw new IllegalArgumentException(getClass().getCanonicalName()
@@ -56,9 +56,9 @@ public class Point<T extends FieldElement> {
         }
         // points are different, regular case
         if ( ! this.x.equals(that.getX())) {
-            FieldElement slope = (that.getY().subtract(this.y)).divide(that.getX().subtract(this.x));
-            FieldElement x3 = slope.pow(2).subtract(this.x).subtract(that.getX());
-            FieldElement y3 = slope.multiply(this.x.subtract(x3)).subtract(this.y);
+            T slope = (T) (that.getY().subtract(this.y)).divide(that.getX().subtract(this.x));
+            T x3 = (T) slope.pow(2).subtract(this.x).subtract(that.getX());
+            T y3 = (T) slope.multiply(this.x.subtract(x3)).subtract(this.y);
             return new Point(x3, y3, this.a, this.b);
         }
         // tangent without further section
@@ -67,16 +67,18 @@ public class Point<T extends FieldElement> {
         }
         // point added to itself
         if (this.equals(that)) {
-            FieldElement slope = (this.x.pow(2).multiply(this.x.valueOf(3)).add(this.a))
+            T slope = (T) (this.x.pow(2).multiply(this.x.valueOf(3)).add(this.a))
                     .divide(this.y.multiply(this.x.valueOf(2)));
-            FieldElement x3 = slope.pow(2).subtract(this.x.multiply(this.x.valueOf(2)));
-            FieldElement y3 = (slope.multiply(this.x.subtract(x3))).subtract(this.y);
+//            T slope = (T) (this.x.pow(2).multiply(this.x.valueOf(3)).add(this.a))
+//                    .divide(this.y.multiply(this.x.valueOf(2)));
+            T x3 = (T) slope.pow(2).subtract(this.x.multiply(this.x.valueOf(2)));
+            T y3 = (T) (slope.multiply(this.x.subtract(x3))).subtract(this.y);
             return new Point(x3, y3, this.a, this.b);
         }
         return null;
     }
 
-    public Point rmul(BigInteger scalar) {
+    public Point<T> rmul(BigInteger scalar) {
         BigInteger coef = scalar;
         Point<T> current = this;
         Point<T> result = new Point<>(this.a, this.b);

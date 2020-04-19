@@ -40,12 +40,12 @@ public class S256UtilTest {
         Point<S256FieldElement> point = G.rmul(e);
         System.out.println(point);
         // FIXME point/fieldElement type system is broken, can't even print out num <-------!!!!!!!!!
-//        System.out.println("x/y: " + point.getX().getNum() + "/" + point.getY().getNum());
+        System.out.println("x/y: " + point.getX().getNum() + "/" + point.getY().getNum());
         System.out.println(z.toString(16));
         System.out.println(r.toString(16));
         System.out.println(s.toString(16));
 
         // verify
-        //assertTrue(verify(point, z, new Signature(r, s)));
+        assertTrue(verify(point, z, new Signature(r, s)));
     }
 }

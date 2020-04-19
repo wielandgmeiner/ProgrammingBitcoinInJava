@@ -44,7 +44,7 @@ public final class S256Util {
         BigInteger gy = new BigInteger(y, 16);
         S256FieldElement sx = new S256FieldElement(gx);
         S256FieldElement sy = new S256FieldElement(gy);
-        Point<S256FieldElement> point = new Point<S256FieldElement>(sx, sy, A, B);
+        Point<S256FieldElement> point = new Point<>(sx, sy, A, B);
         return point;
     }
 
