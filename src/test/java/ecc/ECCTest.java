@@ -245,5 +245,7 @@ public class ECCTest {
         BigInteger u = z.multiply(sInv).mod(N);
         BigInteger v = r.multiply(sInv).mod(N);
         assertEquals(r, G.rmul(u).add(point.rmul(v)).getX().getNum());
+        System.out.println(G.rmul(u).getX().getClass());
+        System.out.println(G.rmul(u).add(point.rmul(v)).getX().getClass());
     }
 }

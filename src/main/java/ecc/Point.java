@@ -76,7 +76,7 @@ public class Point<T extends FieldElement> {
         return null;
     }
 
-    public Point<T> rmul(BigInteger scalar) {
+    public Point rmul(BigInteger scalar) {
         BigInteger coef = scalar;
         Point<T> current = this;
         Point<T> result = new Point<>(this.a, this.b);

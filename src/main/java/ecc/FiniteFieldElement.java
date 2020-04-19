@@ -130,7 +130,7 @@ public class FiniteFieldElement implements FieldElement {
 
     @Override
     public String toString() {
-        return "FiniteFieldElement_" + prime + "(" + num + ")";
+        return "FiniteFieldElement_" + prime.toString(16) + "(" + num.toString(16) + ")";
     }
 
     @Override
@@ -152,6 +152,7 @@ public class FiniteFieldElement implements FieldElement {
         return this.num.equals(0);
     }
 
+    @Override
     public BigInteger getNum() {
         return num;
     }

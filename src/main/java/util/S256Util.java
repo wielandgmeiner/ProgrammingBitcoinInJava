@@ -1,11 +1,11 @@
 package util;
 
-import ecc.FieldElement;
-import ecc.FiniteFieldElement;
-import ecc.Point;
-import ecc.S256FieldElement;
+import ecc.*;
 
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /*
  * Constants for the Curve secp256k1
@@ -46,5 +46,27 @@ public final class S256Util {
         S256FieldElement sy = new S256FieldElement(gy);
         Point<S256FieldElement> point = new Point<S256FieldElement>(sx, sy, A, B);
         return point;
+    }
+
+    public static boolean verify(Point<S256FieldElement> point, BigInteger z, Signature sig) {
+        BigInteger sInv = sig.getS().modPow(N.subtract(BigInteger.valueOf(2L)), N);
+        BigInteger u = z.multiply(sInv).mod(N);
+        BigInteger v = sig.getR().multiply(sInv).mod(N);
+        Point<S256FieldElement> total = G.rmul(u).add(point.rmul(v));
+        return sig.getR().equals(total.getX().getNum());
+    }
+
+    // 2 rounds of sha256
+    public static byte[] hash256(String s) {
+        MessageDigest digest = null;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (
+                NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        byte[] hash = digest.digest(s.getBytes(StandardCharsets.UTF_8));
+        byte[] doubleHash = digest.digest(hash);
+        return doubleHash;
     }
 }
